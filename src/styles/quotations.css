@@ -1,0 +1,95 @@
+/* Contenedor de la Tabla */
+.items-table-container {
+    margin-bottom: 20px;
+    border: 1px solid #fed7aa; /* Borde naranja suave */
+    border-radius: 8px;
+    overflow: hidden; /* Para que las esquinas redondas funcionen */
+}
+
+/* La Tabla en sí */
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+/* Encabezados */
+.items-table th {
+    background-color: #ffedd5; /* Fondo crema anaranjado */
+    color: #9a3412;            /* Texto naranja oscuro */
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #fdba74;
+}
+
+.items-table th.center { text-align: center; }
+.items-table th.right { text-align: right; }
+
+/* Celdas del Cuerpo */
+.items-table td {
+    padding: 8px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.items-table tr:last-child td { border-bottom: none; }
+.items-table tr:hover { background-color: #fff7ed; } /* Hover muy suave */
+
+/* Inputs dentro de la tabla (Transparentes) */
+.input-cell {
+    width: 100%;
+    border: 1px solid transparent;
+    padding: 6px;
+    border-radius: 4px;
+    font-family: inherit;
+    background: transparent;
+    transition: 0.2s;
+}
+
+.input-cell:focus {
+    background: white;
+    border-color: var(--primary-color); /* Se pone naranja al escribir */
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.1);
+}
+
+.input-cell.number { text-align: center; }
+.input-cell.money { text-align: right; }
+
+/* Botones */
+.btn-delete {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.btn-delete:hover { color: #dc2626; background-color: #fee2e2; border-radius: 4px; }
+
+.btn-add {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    color: var(--primary-color);
+    border: 1px dashed var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-add:hover {
+    background-color: #fff7ed;
+    border-style: solid;
+}
