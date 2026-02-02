@@ -1,22 +1,83 @@
-/* Contenedor de la Tabla */
-.items-table-container {
-    margin-bottom: 20px;
-    border: 1px solid #fed7aa; /* Borde naranja suave */
+/* =========================================
+   1. ESTILOS GENERALES DEL FORMULARIO
+   ========================================= */
+.quotation-form {
+    background: white;
+    padding: 30px;
     border-radius: 8px;
-    overflow: hidden; /* Para que las esquinas redondas funcionen */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-/* La Tabla en sí */
+.excel-header {
+    text-align: center;
+    border-bottom: 3px solid #ea580c; /* Naranja FPC */
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+}
+
+.excel-header h2 {
+    margin: 0;
+    color: #ea580c;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+}
+
+/* =========================================
+   2. GRILLA TIPO EXCEL (Para Cliente)
+   ========================================= */
+.excel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 Columnas iguales */
+    gap: 30px;
+    margin-bottom: 30px;
+    background: #fff7ed; /* Fondo naranja muy suave */
+    padding: 20px;
+    border: 1px solid #fdba74;
+    border-radius: 6px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #9a3412;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+/* =========================================
+   3. TABLA DE ÍTEMS (Productos)
+   ========================================= */
+.items-table-container {
+    margin-bottom: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
 .items-table {
     width: 100%;
     border-collapse: collapse;
     background: white;
 }
 
-/* Encabezados */
 .items-table th {
-    background-color: #ffedd5; /* Fondo crema anaranjado */
-    color: #9a3412;            /* Texto naranja oscuro */
+    background-color: #ffedd5;
+    color: #9a3412;
     text-transform: uppercase;
     font-size: 0.75rem;
     padding: 12px;
@@ -24,94 +85,124 @@
     border-bottom: 2px solid #fdba74;
 }
 
-.items-table th.center { text-align: center; }
-.items-table th.right { text-align: right; }
+.items-table th.center, .items-table td.center { text-align: center; }
+.items-table th.right, .items-table td.right { text-align: right; }
 
-/* Celdas del Cuerpo */
 .items-table td {
     padding: 8px;
     border-bottom: 1px solid #f1f5f9;
 }
 
-.items-table tr:last-child td { border-bottom: none; }
-.items-table tr:hover { background-color: #fff7ed; } /* Hover muy suave */
-
-/* Inputs dentro de la tabla (Transparentes) */
+/* Inputs transparentes dentro de la tabla */
 .input-cell {
     width: 100%;
     border: 1px solid transparent;
     padding: 6px;
-    border-radius: 4px;
-    font-family: inherit;
     background: transparent;
-    transition: 0.2s;
+    font-family: inherit;
 }
 
 .input-cell:focus {
     background: white;
-    border-color: var(--primary-color); /* Se pone naranja al escribir */
+    border-color: #ea580c;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.1);
 }
 
-.input-cell.number { text-align: center; }
 .input-cell.money { text-align: right; }
+.input-cell.number { text-align: center; }
 
-/* Botones */
+/* Botones Tabla */
 .btn-delete {
     background: none;
     border: none;
     color: #94a3b8;
     cursor: pointer;
     padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: color 0.2s;
 }
-
-.btn-delete:hover { color: #dc2626; background-color: #fee2e2; border-radius: 4px; }
+.btn-delete:hover { color: #dc2626; }
 
 .btn-add {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: white;
-    color: var(--primary-color);
-    border: 1px dashed var(--primary-color);
-    padding: 10px 20px;
+    color: #ea580c;
+    border: 1px dashed #ea580c;
+    padding: 10px;
+    width: 100%;
     border-radius: 6px;
     font-weight: bold;
-    font-size: 0.9rem;
-    width: 100%;
-    justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
 }
+.btn-add:hover { background-color: #fff7ed; }
 
-.btn-add:hover {
-    background-color: #fff7ed;
-    border-style: solid;
+/* =========================================
+   4. SECCIÓN DE TOTALES
+   ========================================= */
+.totals-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
 }
 
+.totals-box {
+    width: 300px;
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.totals-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    color: #64748b;
+}
+
+.totals-row.final {
+    border-top: 2px solid #ea580c;
+    margin-top: 10px;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #ea580c;
+}
+
+/* =========================================
+   5. BOTONES GENERALES
+   ========================================= */
+.btn-primary {
+    background-color: #ea580c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn-primary:hover { background-color: #c2410c; }
+.btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.btn-secondary {
+    background-color: white;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-secondary:hover { background-color: #f1f5f9; }
+
+/* =========================================
+   6. CORRECCIÓN DE COLORES (El Parche)
+   ========================================= */
 input, select, textarea {
     background-color: #ffffff !important;
-    color: #1c1917 !important; /* Negro suave */
-    border: 1px solid #fdba74; /* Borde naranja suave */
-}
-
-/* Al escribir, que el borde se ponga naranja fuerte */
-input:focus, select:focus, textarea:focus {
-    outline: none !important;
-    border-color: #ea580c !important;
-    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.1);
-}
-
-/* Excepción: Los inputs dentro de la tabla deben ser transparentes */
-.items-table input {
-    background-color: transparent !important;
-    border: none !important;
-}
-.items-table input:focus {
-    background-color: #fff7ed !important; /* Fondo crema al editar */
+    color: #1c1917 !important;
 }

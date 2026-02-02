@@ -3,7 +3,6 @@ import { Save, Printer, ArrowLeft } from 'lucide-react';
 import ItemsTable from './ItemsTable';
 import { useQuotations } from '../hooks/useQuotations';
 import '../styles/quotations.css';
-import { FetchableDevEnvironment } from 'vite';
 
 
 export default function QuotationForm({ alVolver }) { 
