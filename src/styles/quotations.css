@@ -93,3 +93,25 @@
     background-color: #fff7ed;
     border-style: solid;
 }
+
+input, select, textarea {
+    background-color: #ffffff !important;
+    color: #1c1917 !important; /* Negro suave */
+    border: 1px solid #fdba74; /* Borde naranja suave */
+}
+
+/* Al escribir, que el borde se ponga naranja fuerte */
+input:focus, select:focus, textarea:focus {
+    outline: none !important;
+    border-color: #ea580c !important;
+    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.1);
+}
+
+/* Excepción: Los inputs dentro de la tabla deben ser transparentes */
+.items-table input {
+    background-color: transparent !important;
+    border: none !important;
+}
+.items-table input:focus {
+    background-color: #fff7ed !important; /* Fondo crema al editar */
+}

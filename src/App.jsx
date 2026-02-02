@@ -1,35 +1,34 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import QuotationList from './components/QuotationList'
+import QuotationForm from './components/QuotationForm'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [vista, setVista] = useState('lista'); // 'lista' o 'formulario'
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  return ( 
+    <div className="container">
+      {vista === 'lista' && ( 
+        <header style={{ marginBottom: '30px', textAlign: 'center' }}>
+          <h1 style={{ color: '#ea580c', fontSize: '2.5rem', marginBottom: '5px', textTransform: 'uppercase'}}>
+            Ferrum - Sistema de Emisión de Cotizaciones
+          </h1>
+          <p style={{ color: '#64748b'}}>Sistema de Gestión FPC Abastecimiento</p>
+        </header>
+      )}
+
+      <main>
+        {vista === 'lista' ? ( 
+          <QuotationList irAFormulario={() => setVista('formulario')} />
+        ) : ( 
+          <QuotationForm alVolver={() => setVista('lista')} />
+        )}
+      </main>
+
+      <footer style={{ textAlign: 'center', marginTop: '50px', color: '#94a3b8', fontSize: '0.8rem'}}>
+        <p>© 2026 FPC Abastecimiento Industrial - Desarrollado con Ferrum</p>
+      </footer>
+    </div>
+  );
 }
 
-export default App
+export default App;
