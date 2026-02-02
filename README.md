@@ -25,4 +25,5 @@ Este proyecto soluciona el problema de la descentralización de datos (archivos 
     npm install
     npm install @supabase/supabase-js
     npm install lucide-react
+    npm install jspdf jspdf-autotable
     ```
