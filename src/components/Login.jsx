@@ -30,7 +30,7 @@ export default function Login() {
         <div className="login-container fade-in">
             <div className="login-card">
                 <div className="login-logo">FERRUM</div>
-                <p className="login-subtitle">Acceso Seguro FPC Abastecimiento</p>
+                <p className="login-subtitle">Acceso Seguro</p>
 
                 {error && <div className="error-msg">{error}</div>}
 
@@ -39,7 +39,7 @@ export default function Login() {
                         <label>Correo Corporativo</label>
                         <input 
                             type="email" 
-                            placeholder="usuario@fpc.cl"
+                            placeholder="usuario@dominio.cl"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required 
