@@ -7,10 +7,10 @@
     width: 100%;
 }
 
-/* --- BARRA DE BÚSQUEDA (Solución a "muy junto") --- */
+/* --- BARRA DE BÚSQUEDA --- */
 .search-bar { 
     display: flex; 
-    gap: 40px; /* ✅ AQUÍ ESTÁ EL ESPACIO GRANDE ENTRE INPUT Y BOTÓN */
+    gap: 40px;
     margin-bottom: 30px; 
     background: #f8fafc;
     padding: 20px;
@@ -27,17 +27,17 @@
     background: white;
 }
 
-/* --- TABLA DE LISTADO (Espaciada) --- */
+/* --- TABLA DE LISTADO --- */
 .quotations-table { 
     width: 100%; 
     border-collapse: collapse; 
     margin-top: 10px; 
-    table-layout: fixed; /* Mantiene las columnas firmes */
+    table-layout: fixed;
 }
 
 .quotations-table th { 
     text-align: left; 
-    padding: 15px; /* Espacio interno */
+    padding: 15px;
     background: #fff7ed; 
     color: #9a3412; 
     font-size: 0.85rem; 
@@ -46,12 +46,12 @@
 }
 
 .quotations-table td { 
-    padding: 15px; /* Espacio interno de celdas */
+    padding: 15px;
     border-bottom: 1px solid #e2e8f0;
     vertical-align: middle;
 }
 
-/* --- ESTILOS QUE YA TENÍAS (Formulario y Tabla de Items) --- */
+/*--- (Formulario y Tabla de Items) --- */
 .items-table-container { margin-bottom: 20px; border: 1px solid #fed7aa; border-radius: 8px; overflow: hidden; }
 .items-table { width: 100%; border-collapse: collapse; background: white; }
 .items-table th { background-color: #ffedd5; color: #9a3412; text-transform: uppercase; font-size: 0.75rem; padding: 12px; text-align: left; border-bottom: 2px solid #fdba74; }
@@ -78,3 +78,56 @@
 .form-group { margin-bottom: 10px; }
 .form-group label { display: block; font-weight: bold; color: #9a3412; margin-bottom: 5px; }
 .form-group input { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; }
+
+/* --- SECCIÓN DE TOTALES EN CUADRÍCULA --- */
+.totals-section {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 30px;
+}
+
+.totals-grid {
+    display: grid;
+    grid-template-columns: 120px 180px; /* Columna Izq (Etiqueta) | Columna Der (Valor) */
+    border: 1px solid #fed7aa;
+    border-radius: 8px;
+    overflow: hidden; /* Para que las esquinas redondeadas funcionen */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Celdas de ETIQUETA (Izquierda) */
+.total-label {
+    background-color: #fff7ed; /* Fondo crema/naranja muy suave */
+    color: #9a3412;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 12px 15px;
+    border-bottom: 1px solid #fed7aa;
+    border-right: 1px solid #fed7aa;
+    display: flex;
+    align-items: center;
+}
+
+/* Celdas de VALOR (Derecha) */
+.total-value {
+    background-color: white;
+    color: #334155;
+    font-size: 1rem;
+    padding: 12px 15px;
+    text-align: right;
+    border-bottom: 1px solid #fed7aa;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Estilos especiales para la última fila */
+.total-label.final, .total-value.final {
+    background-color: #ea580c;
+    color: white;
+    border-bottom: none;
+    font-size: 1.1rem;
+}
+
+.total-value.final {
+    font-weight: bold;
+}

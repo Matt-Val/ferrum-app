@@ -15,7 +15,6 @@ body {
   min-height: 100vh;
   background-color: var(--bg-color);
   color: var(--text-color);
-  /* ✅ ESTO ES CLAVE: display block permite usar todo el ancho */
   display: block; 
 }
 
