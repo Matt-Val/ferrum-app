@@ -63,38 +63,40 @@ export default function QuotationList({ irAFormulario }) {
             {loading ? (
                 <div style={{ textAlign: 'center', padding: '40px', color: '#ea580c' }}><Loader className="animate-spin" /> Cargando...</div>
             ) : (
-                <table className="quotations-table">
-                    <thead>
-                        <tr>
-                            <th style={{ width: '10%' }}>Folio</th>
-                            <th style={{ width: '15%' }}>Fecha</th>
-                            <th style={{ width: '30%' }}>Cliente</th>
-                            <th style={{ width: '15%' }}>RUT</th>
-                            <th style={{ width: '15%' }}>Total</th>
-                            <th style={{ width: '15%', textAlign: 'center' }}>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cotizacionesFiltradas.length === 0 ? (
-                            <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px', color: '#666' }}>No se encontraron resultados.</td></tr>
-                        ) : (
-                            cotizacionesFiltradas.map((q) => (
-                                <tr key={q.id}>
-                                    <td style={{ fontWeight: 'bold', color: '#ea580c' }}>#{q.numero_cotizacion}</td>
-                                    <td>{formatoFecha(q.created_at)}</td>
-                                    <td style={{ fontWeight: '600' }}>{q.nombre_cliente}</td>
-                                    <td>{q.rut_cliente}</td>
-                                    <td style={{ fontWeight: 'bold' }}>{formatoDinero(q.datos_json?.totales?.total)}</td>
-                                    <td style={{ textAlign: 'center' }}>
-                                        <button onClick={() => verPDF(q)} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.85rem', display: 'inline-flex', gap: '6px', alignItems: 'center' }}>
-                                            <FileText size={16} /> Ver PDF
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
+                <div className="table-responsive">
+                    <table className="quotations-table">
+                        <thead>
+                            <tr>
+                                <th style={{ width: '10%' }}>Folio</th>
+                                <th style={{ width: '15%' }}>Fecha</th>
+                                <th style={{ width: '30%' }}>Cliente</th>
+                                <th style={{ width: '15%' }}>RUT</th>
+                                <th style={{ width: '15%' }}>Total</th>
+                                <th style={{ width: '15%', textAlign: 'center' }}>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cotizacionesFiltradas.length === 0 ? (
+                                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px', color: '#666' }}>No se encontraron resultados.</td></tr>
+                            ) : (
+                                cotizacionesFiltradas.map((q) => (
+                                    <tr key={q.id}>
+                                        <td style={{ fontWeight: 'bold', color: '#ea580c' }}>#{q.numero_cotizacion}</td>
+                                        <td>{formatoFecha(q.created_at)}</td>
+                                        <td style={{ fontWeight: '600' }}>{q.nombre_cliente}</td>
+                                        <td>{q.rut_cliente}</td>
+                                        <td style={{ fontWeight: 'bold' }}>{formatoDinero(q.datos_json?.totales?.total)}</td>
+                                        <td style={{ textAlign: 'center' }}>
+                                            <button onClick={() => verPDF(q)} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.85rem', display: 'inline-flex', gap: '6px', alignItems: 'center' }}>
+                                                <FileText size={16} /> Ver PDF
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             )}
 
             {/* --- MODAL VISOR DE PDF --- */}
