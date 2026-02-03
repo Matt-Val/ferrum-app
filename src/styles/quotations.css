@@ -150,6 +150,13 @@
     .search-bar > div:first-child {
         margin-right: 0 !important; /* Quitamos el margen derecho forzado */
         width: 100%;
+        flex: none !important; /* Evita que flex cause desbordamiento */
+    }
+
+    .search-bar input {
+        width: 100% !important;
+        box-sizing: border-box; /* Incluye padding en el ancho total */
+        max-width: 100%;
     }
 
     .search-bar .btn-primary, 
@@ -162,6 +169,7 @@
         display: flex;
         flex-direction: column; /* Botones uno bajo el otro */
         width: 100%;
+        gap: 10px;
     }
 
     /* 3. Formulario: Una sola columna */
