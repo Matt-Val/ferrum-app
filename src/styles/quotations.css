@@ -140,87 +140,113 @@
         padding: 15px; /* Menos relleno en los bordes */
     }
 
+    /* Ajustar padding de las tarjetas en móvil */
+    .quotations-list, .quotation-form {
+        padding: 20px 15px;
+    }
+
     /* 2. Barra de Búsqueda: Uno debajo del otro */
     .search-bar {
         flex-direction: column;
-        align-items: stretch !important; /* Estirar a todo el ancho */
+        align-items: stretch !important;
         gap: 15px;
     }
 
     .search-bar > div:first-child {
-        margin-right: 0 !important; /* Quitamos el margen derecho forzado */
+        margin-right: 0 !important;
         width: 100%;
-        flex: none !important; /* Evita que flex cause desbordamiento */
+        flex: none !important;
     }
 
     .search-bar input {
         width: 100% !important;
-        box-sizing: border-box; /* Incluye padding en el ancho total */
+        box-sizing: border-box;
         max-width: 100%;
     }
 
     .search-bar .btn-primary, 
     .search-bar .btn-secondary {
-        width: 100%; /* Botones grandes fáciles de tocar */
+        width: 100%;
         justify-content: center;
     }
     
     .search-bar > div:last-child {
         display: flex;
-        flex-direction: column; /* Botones uno bajo el otro */
+        flex-direction: column;
         width: 100%;
         gap: 10px;
     }
 
     /* 3. Formulario: Una sola columna */
     .excel-grid {
-        grid-template-columns: 1fr; /* Colapsar a 1 columna */
+        grid-template-columns: 1fr;
         gap: 15px;
+        padding: 15px;
     }
 
     .col-left, .col-right {
         padding-right: 0;
-        border-right: none; /* Quitar línea divisoria si existía */
+        border-right: none;
     }
 
-    /* 4. Tabla Deslizable */
+    /* Ajustar inputs del formulario */
+    .form-group input {
+        font-size: 16px; /* Evita zoom automático en iOS */
+    }
+
+    /* 4. Tabla de Items */
+    .items-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .items-table {
+        min-width: 500px;
+    }
+
+    .input-cell {
+        font-size: 16px; /* Evita zoom automático en iOS */
+        min-width: 80px;
+    }
+
+    /* 5. Tabla Deslizable */
     .table-responsive {
         width: 100%;
-        overflow-x: auto; /* Permite deslizar el dedo si la tabla es ancha */
-        -webkit-overflow-scrolling: touch; /* Suavidad en iPhone */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         margin-bottom: 20px;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
     }
 
     .quotations-table {
-        min-width: 600px; /* Fuerza el ancho para que aparezca el scroll */
+        min-width: 600px;
     }
 
-    /* 5. Totales */
+    /* 6. Totales */
     .totals-section {
-        justify-content: center; /* Centrar totales */
+        justify-content: center;
     }
     
     .totals-grid {
-        width: 100%; /* Que ocupe todo el ancho */
-        grid-template-columns: 1fr 1fr; /* Mitad y mitad */
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
     }
 
-    /* 6. Botones del Formulario (Guardar/Volver) */
+    /* 7. Botones del Formulario (Guardar/Volver) */
     .quotation-form > div:last-child {
-        flex-direction: column-reverse; /* Guardar arriba, Volver abajo */
+        flex-direction: column-reverse;
         gap: 15px;
     }
 
     .quotation-form > div:last-child button {
         width: 100%;
         justify-content: center;
-        padding: 15px; /* Más grandes para dedos */
+        padding: 15px;
     }
 
-    /* 7. Modal del PDF */
+    /* 8. Modal del PDF */
     iframe {
-        height: 60vh !important; /* Un poco más pequeño en altura */
+        height: 60vh !important;
     }
 }

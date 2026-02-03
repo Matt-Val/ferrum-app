@@ -6,8 +6,8 @@ export default function ItemsTable({ items, setItems }) {
 
     const agregarFila = () => { 
         const nuevaFila = { 
-            id: crypto.randomUUID(),
-            description: '',
+            id: Date.now() + Math.random(), // Reemplaza crypto.randomUUID()
+            descripcion: '',
             cantidad: 1,
             precio: 0
         };

@@ -14,7 +14,7 @@ export default function QuotationForm({ alVolver }) {
     });
 
     const [items, setItems] = useState([
-        { id: crypto.randomUUID(), descripcion: '', cantidad: 1, precio: 0 }
+    { id: Date.now(), descripcion: '', cantidad: 1, precio: 0 }
     ]);
 
     const neto = items.reduce((acc, item) => acc + (item.cantidad * item.precio), 0);
