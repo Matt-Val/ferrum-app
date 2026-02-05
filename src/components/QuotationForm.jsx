@@ -17,9 +17,18 @@ export default function QuotationForm({ alVolver }) {
     { id: Date.now(), descripcion: '', cantidad: 1, precio: 0 }
     ]);
 
-    const neto = items.reduce((acc, item) => acc + (item.cantidad * item.precio), 0);
+    // Cálculo seguro de totales
+    const neto = items.reduce((acc, item) => {
+        // Convertimos a float asegurando que si viene texto vacío o inválido sea 0
+        const cant = parseFloat(item.cantidad) || 0;
+        const prec = parseFloat(item.precio) || 0;
+        return acc + (cant * prec);
+    }, 0);
+    
     const iva = Math.round(neto * 0.19);
     const total = neto + iva;
+
+
     const formatoDinero = (m) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP'}).format(m);
 
     const guardar = async () => { 

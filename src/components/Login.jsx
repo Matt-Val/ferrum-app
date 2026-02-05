@@ -1,51 +1,42 @@
 import { useState } from 'react';
-import { supabase } from '../supabaseClient';
-import '../styles/login.css'; // Asegúrate de tener el CSS que creamos antes
+import '../styles/login.css';
 
-export default function Login() {
+export default function Login({ onLogin }) { // Recibimos la función onLogin
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
-    const handleLogin = async (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
-
-        // Intentamos iniciar sesión con Supabase
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-
-        if (error) {
-            setError("Credenciales incorrectas. Verifique su correo y contraseña.");
+        
+        // Simulación de carga
+        setTimeout(() => {
+            // Guardamos sesión "falsa" en el navegador
+            localStorage.setItem('ferrum_session', 'true');
+            // Avisamos a la App que entramos
+            if(onLogin) onLogin();
             setLoading(false);
-        }
-        // Si no hay error, App.jsx detectará el cambio de sesión automáticamente
+        }, 800);
     };
 
     return (
         <div className="login-container fade-in">
             <div className="login-card">
                 <div className="login-logo">FERRUM</div>
-                <p className="login-subtitle">Acceso Seguro</p>
-
-                {error && <div className="error-msg">{error}</div>}
+                <p className="login-subtitle">Sistema de Cotizaciones</p>
 
                 <form onSubmit={handleLogin} className="login-form">
                     <div className="input-group">
-                        <label>Correo Corporativo</label>
+                        <label>Usuario</label>
                         <input 
-                            type="email" 
-                            placeholder="usuario@dominio.cl"
+                            type="text" 
+                            placeholder="admin"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required 
                         />
                     </div>
-
                     <div className="input-group">
                         <label>Contraseña</label>
                         <input 
@@ -56,9 +47,8 @@ export default function Login() {
                             required 
                         />
                     </div>
-
                     <button type="submit" className="btn-login" disabled={loading}>
-                        {loading ? 'Verificando...' : 'Ingresar al Sistema'}
+                        {loading ? 'Accediendo...' : 'Entrar'}
                     </button>
                 </form>
             </div>

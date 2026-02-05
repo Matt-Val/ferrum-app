@@ -52,16 +52,90 @@
 }
 
 /*--- (Formulario y Tabla de Items) --- */
-.items-table-container { margin-bottom: 20px; border: 1px solid #fed7aa; border-radius: 8px; overflow: hidden; }
-.items-table { width: 100%; border-collapse: collapse; background: white; }
-.items-table th { background-color: #ffedd5; color: #9a3412; text-transform: uppercase; font-size: 0.75rem; padding: 12px; text-align: left; border-bottom: 2px solid #fdba74; }
-.items-table td { padding: 8px; border-bottom: 1px solid #f1f5f9; }
-.input-cell { width: 100%; border: 1px solid transparent; padding: 6px; background: transparent; }
-.input-cell:focus { background: white; border-color: #ea580c; outline: none; }
-.btn-add { display: flex; align-items: center; justify-content: center; gap: 8px; background: white; color: #ea580c; border: 1px dashed #ea580c; padding: 10px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px;}
-.btn-delete { background: none; border: none; color: #94a3b8; cursor: pointer; }
-.btn-delete:hover { color: #dc2626; }
+/*--- (Formulario y Tabla de Items) --- */
+.items-table-container { 
+    margin-bottom: 20px; 
+    border: 1px solid #fed7aa; 
+    border-radius: 8px; 
+    background: #fff; /* Fondo blanco */
+    padding: 20px;    /* <--- AQUÍ ESTÁ LA SOLUCIÓN DEL CENTRADO */
+    overflow-x: auto; /* Para que no se rompa en móviles */
+}
 
+.items-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    background: white; 
+}
+
+.items-table th { 
+    background-color: #ffedd5; 
+    color: #9a3412; 
+    text-transform: uppercase; 
+    font-size: 0.75rem; 
+    padding: 12px; 
+    text-align: left; 
+    border-bottom: 2px solid #fdba74; 
+}
+
+.items-table td { 
+    padding: 8px; 
+    border-bottom: 1px solid #f1f5f9; 
+    vertical-align: middle;
+}
+
+/* INPUTS DE LA TABLA (Diseño limpio tipo Excel) */
+.desc-input, .qty-input, .price-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #e2e8f0; /* Borde muy suave */
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #334155;
+    transition: all 0.2s;
+}
+
+.desc-input:focus, .qty-input:focus, .price-input:focus {
+    border-color: #ea580c; /* Naranja al escribir */
+    outline: none;
+    background-color: #fff7ed; /* Fondo naranjita muy suave al enfocar */
+    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.1);
+}
+
+/* Alineaciones específicas para inputs numéricos */
+.qty-input { text-align: center; }
+.price-input { text-align: right; }
+
+/* Botones de acción en la tabla */
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.btn-icon.delete { color: #94a3b8; }
+.btn-icon.delete:hover { color: #dc2626; background: #fee2e2; }
+
+.btn-icon.add { 
+    background-color: #ea580c; 
+    color: white; 
+    width: 32px; 
+    height: 32px; 
+    margin: 0 auto; /* Centrar botón */
+}
+.btn-icon.add:hover { background-color: #c2410c; }
+
+/* Fila de agregar item */
+.add-item-row td {
+    background-color: #f8fafc; /* Fondo gris muy suave para diferenciar la fila de ingreso */
+    border-top: 2px solid #e2e8f0;
+}
 /* TOTALES */
 .totals-section { display: flex; justify-content: flex-end; margin-top: 20px; }
 .totals-box { width: 300px; padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }

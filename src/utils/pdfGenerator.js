@@ -1,120 +1,140 @@
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
-export const generarPDF = (cotizacion, accion = 'descargar') => {
-    const doc = new jsPDF();
-    const datos = cotizacion.datos_json || {};
-    const cliente = datos.cliente || {};
-    const items = datos.items || [];
-    const totales = datos.totales || { neto: 0, iva: 0, total: 0 };
+// Cargador de logo
+const cargarLogo = (url) => {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+    });
+};
 
-    const formatoFecha = (fecha) => new Date(fecha).toLocaleDateString('es-CL');
-    const formatoDinero = (monto) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(monto || 0);
-
-    // --- 1. ENCABEZADO ---
-    doc.setFontSize(22);
-    doc.setTextColor(234, 88, 12);
-    doc.text("FPC Abastecimiento", 14, 20);
-    
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text("Soluciones Industriales y Servicios", 14, 26);
-
-    // Datos a la derecha
-    doc.setFontSize(10);
-    doc.setTextColor(0);
-    doc.text(`FOLIO: #${cotizacion.numero_cotizacion || 'BORRADOR'}`, 196, 20, { align: 'right' });
-    doc.text(`FECHA: ${formatoFecha(cotizacion.created_at || new Date())}`, 196, 26, { align: 'right' });
-
-    // Línea divisoria
-    doc.setDrawColor(234, 88, 12); 
-    doc.setLineWidth(1); 
-    doc.line(14, 32, 196, 32);
-
-    // --- TÍTULO DEL DOCUMENTO ---
-    doc.setFontSize(14);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0);
-    doc.text("HOJA DE COTIZACIÓN", 105, 42, { align: 'center' }); // Centrado
-
-    // --- 2. DATOS DEL CLIENTE  ---
-    const startYClient = 48;
-    
-    doc.setFillColor(248, 250, 252); 
-    doc.rect(14, startYClient, 182, 35, 'F');
-    
-    doc.setFontSize(10); 
-    doc.setTextColor(0);
-    // Columna Izq
-    doc.setFont("helvetica", "bold"); doc.text("CLIENTE:", 20, startYClient + 7);
-    doc.setFont("helvetica", "normal"); doc.text(cliente.nombre || "Sin Nombre", 20, startYClient + 13);
-    doc.setFont("helvetica", "bold"); doc.text("RUT:", 20, startYClient + 21);
-    doc.setFont("helvetica", "normal"); doc.text(cliente.rut || "Sin RUT", 20, startYClient + 27);
-    // Columna Der
-    doc.setFont("helvetica", "bold"); doc.text("DIRECCIÓN:", 110, startYClient + 7);
-    doc.setFont("helvetica", "normal"); doc.text(cliente.direccion || "No registrada", 110, startYClient + 13);
-    doc.setFont("helvetica", "bold"); doc.text("TELÉFONO:", 110, startYClient + 21);
-    doc.setFont("helvetica", "normal"); doc.text(cliente.telefono || "No registrado", 110, startYClient + 27);
-
-    // --- 3. TABLA DE PRODUCTOS ---
-    autoTable(doc, {
-        startY: 90, // Bajamos la tabla para que no choque
-        head: [['DESCRIPCIÓN', 'CANT', 'PRECIO UNIT', 'TOTAL']],
-        body: items.map(item => [
-            item.descripcion,
-            item.cantidad,
-            formatoDinero(item.precio),
-            formatoDinero(item.cantidad * item.precio)
-        ]),
-        styles: { fontSize: 9 },
-        headStyles: { fillColor: [234, 88, 12], textColor: 255 },
-        columnStyles: { 
-            0: { cellWidth: 90 }, 
-            1: { halign: 'center' }, 
-            2: { halign: 'right' }, 
-            3: { halign: 'right', fontStyle: 'bold' } 
+export const generarPDF = async (cotizacion, accion = 'ver') => {
+    // Truco anti-bloqueo para imprimir
+    let ventanaImpresion = null;
+    if (accion === 'imprimir') {
+        ventanaImpresion = window.open('', '_blank');
+        if (ventanaImpresion) {
+            ventanaImpresion.document.write('<html><head><title>Imprimiendo...</title></head><body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;"><h2>Generando documento Ferrum...</h2></body></html>');
+        } else {
+            alert("Por favor habilita las ventanas emergentes.");
+            return;
         }
-    });
+    }
 
-    // --- 4. TOTALES (CUADRÍCULA) ---
-    const finalY = doc.lastAutoTable.finalY + 10;
+    let doc;
+    try { doc = new jsPDF(); } catch (e) { return; }
+
+    const colorMarca = [234, 88, 12];
+    
+    const logo = await cargarLogo('/Logo-Ferrum.png'); 
+
+    // --- ENCABEZADO FERRUM ---
+    if (logo) {
+        try { doc.addImage(logo, 'PNG', 14, 15, 30, 30); } catch (e) {}
+    }
+
+    const textoX = logo ? 50 : 14;
+    
+    doc.setFontSize(16);
+    doc.setTextColor(...colorMarca);
+    doc.setFont("helvetica", "bold");
+    doc.text("Ferrum", textoX, 25);
+
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont("helvetica", "normal");
+    doc.text("Cotizaciones y Servicios", textoX, 32);
+    doc.text("contacto@ferrum.cl", textoX, 37); 
+
+    // --- FOLIO ---
+    const folioTexto = cotizacion.numero_cotizacion ? `#${cotizacion.numero_cotizacion}` : "BORRADOR";
+    const fechaTexto = new Date(cotizacion.created_at || new Date()).toLocaleDateString('es-CL');
+
+    doc.setFontSize(10);
+    doc.text(`FOLIO:`, 150, 25);
+    doc.text(`FECHA:`, 150, 32);
+
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...colorMarca);
+    doc.text(folioTexto, 170, 25);
+    doc.setTextColor(0,0,0);
+    doc.text(fechaTexto, 170, 32);
+
+    doc.setDrawColor(...colorMarca);
+    doc.setLineWidth(0.5);
+    doc.line(14, 50, 196, 50);
+
+    // --- DATOS CLIENTE ---
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text("DATOS DEL CLIENTE:", 14, 65);
+
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.text("Señor(es):", 14, 72);
+    doc.text(cotizacion.nombre_cliente || "---", 35, 72);
+    doc.text("Dirección:", 110, 72);
+    doc.text(cotizacion.direccion_cliente || "---", 130, 72);
+    doc.text("RUT:", 14, 78);
+    doc.text(cotizacion.rut_cliente || "---", 35, 78);
+    doc.text("Fono:", 110, 78);
+    doc.text(cotizacion.telefono_cliente || "---", 130, 78);
+
+    // --- TABLA ---
+    const items = cotizacion.datos_json?.items || [];
+    const tableColumn = ["Descripción", "Cant", "P. Unitario", "Total"];
+    const tableRows = items.map(item => [
+        item.descripcion,
+        item.cantidad,
+        `$${parseInt(item.precio || 0).toLocaleString('es-CL')}`,
+        `$${parseInt((item.precio || 0) * (item.cantidad || 0)).toLocaleString('es-CL')}`
+    ]);
 
     autoTable(doc, {
-        startY: finalY,
-        body: [
-            ['Neto', formatoDinero(totales.neto)],
-            ['IVA (19%)', formatoDinero(totales.iva)],
-            ['TOTAL', formatoDinero(totales.total)]
-        ],
-        theme: 'grid',
-        styles: { 
-            fontSize: 10,
-            cellPadding: 2,
-            lineColor: [254, 215, 170],
-            lineWidth: 0.1
-        },
-        columnStyles: {
-            0: { fillColor: [255, 247, 237], textColor: [154, 52, 18], fontStyle: 'bold', cellWidth: 40 },
-            1: { halign: 'right', textColor: [51, 65, 85], cellWidth: 40 }
-        },
-        didParseCell: function (data) {
-            if (data.row.index === 2) {
-                data.cell.styles.fillColor = [234, 88, 12];
-                data.cell.styles.textColor = [255, 255, 255];
-                data.cell.styles.fontStyle = 'bold';
-                data.cell.styles.fontSize = 12;
-            }
-        },
-        margin: { left: 116 } 
+        startY: 90,
+        head: [tableColumn],
+        body: tableRows,
+        theme: 'striped',
+        headStyles: { fillColor: colorMarca, textColor: 255, fontStyle: 'bold' },
+        styles: { fontSize: 9, cellPadding: 3 },
+        columnStyles: { 0: { cellWidth: 90 }, 1: { halign: 'center' }, 2: { halign: 'right' }, 3: { halign: 'right', fontStyle: 'bold' } }
     });
 
-    // --- 5. SALIDA ---
-    if (accion === 'descargar') {
-        doc.save(`Cotizacion_FPC_${cotizacion.numero_cotizacion || 'Nueva'}.pdf`);
-    } else if (accion === 'ver') {
-        return doc.output('bloburl'); 
-    } else if (accion === 'imprimir') {
+    // --- TOTALES ---
+    const finalY = (doc.lastAutoTable && doc.lastAutoTable.finalY) ? doc.lastAutoTable.finalY + 30 : 160;
+    const totales = cotizacion.datos_json?.totales || { neto: 0, iva: 0, total: 0 };
+
+    doc.setFontSize(10);
+    doc.text("Neto:", 140, finalY);
+    doc.text(`$${parseInt(totales.neto || 0).toLocaleString('es-CL')}`, 195, finalY, { align: 'right' });
+    doc.text("IVA (19%):", 140, finalY + 6);
+    doc.text(`$${parseInt(totales.iva || 0).toLocaleString('es-CL')}`, 195, finalY + 6, { align: 'right' });
+
+    doc.setFillColor(...colorMarca);
+    doc.rect(138, finalY + 10, 60, 8, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.text("TOTAL:", 140, finalY + 15.5);
+    doc.text(`$${parseInt(totales.total || 0).toLocaleString('es-CL')}`, 195, finalY + 15.5, { align: 'right' });
+
+    // --- PIE DE PÁGINA FERRUM ---
+    doc.setTextColor(...colorMarca);
+    doc.setFontSize(10);
+    doc.text("Gracias por preferir a FERRUM", 14, finalY);
+    
+    doc.setTextColor(100, 100, 100);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "italic");
+    doc.text("Documento generado electrónicamente.", 14, finalY + 6);
+
+    // Salida
+    if (accion === 'descargar') doc.save(`Cotizacion_${cotizacion.numero_cotizacion}.pdf`);
+    else if (accion === 'imprimir') {
         doc.autoPrint();
-        window.open(doc.output('bloburl'), '_blank');
-    }
+        const blob = doc.output('bloburl');
+        if (ventanaImpresion) ventanaImpresion.location.href = blob;
+    } else return doc.output('bloburl');
 };

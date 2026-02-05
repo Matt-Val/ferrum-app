@@ -1,12 +1,11 @@
 import { Plus, Trash2 } from 'lucide-react';
 import '../styles/quotations.css';
 
-
 export default function ItemsTable({ items, setItems }) { 
 
     const agregarFila = () => { 
         const nuevaFila = { 
-            id: Date.now() + Math.random(), // Reemplaza crypto.randomUUID()
+            id: Date.now() + Math.random(),
             descripcion: '',
             cantidad: 1,
             precio: 0
@@ -23,6 +22,7 @@ export default function ItemsTable({ items, setItems }) {
     const actualizarItem = (id, campo, valor) => { 
         const nuevosItems = items.map(item => { 
             if (item.id === id) { 
+                // CORRECCIÓN: Guardamos el valor tal cual (sin forzar Number inmediatamente)
                 return { ...item, [campo]: valor};
             }
             return item;
@@ -30,9 +30,8 @@ export default function ItemsTable({ items, setItems }) {
         setItems(nuevosItems);
     };
 
-
-    // Formateador de moneda
     const formatoCLP = (valor) => { 
+        if (isNaN(valor)) return '$0';
         return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(valor);
     };
 
@@ -67,7 +66,9 @@ export default function ItemsTable({ items, setItems }) {
                                         type="number"
                                         className="input-cell number"
                                         value={item.cantidad}
-                                        onChange={(e) => actualizarItem(item.id, 'cantidad', Number(e.target.value))}
+                                        step="any"  /* Permite decimales en el navegador */
+                                        // CORRECCIÓN: Pasamos e.target.value directo
+                                        onChange={(e) => actualizarItem(item.id, 'cantidad', e.target.value)}
                                     />
                                 </td>
 
@@ -76,12 +77,14 @@ export default function ItemsTable({ items, setItems }) {
                                         type="number"
                                         className="input-cell money"
                                         value={item.precio}
-                                        onChange={(e) => actualizarItem(item.id, 'precio', Number(e.target.value))}
+                                        // CORRECCIÓN: Pasamos e.target.value directo
+                                        onChange={(e) => actualizarItem(item.id, 'precio', e.target.value)}
                                     />
                                 </td>
 
                                 <td style={{ textAlign: 'right', fontWeight: 'bold', color: '#333' }}>
-                                    {formatoCLP(item.cantidad * item.precio)}
+                                    {/* Calculamos el total visualmente convirtiendo a número aquí */}
+                                    {formatoCLP((parseFloat(item.cantidad) || 0) * (parseFloat(item.precio) || 0))}
                                 </td>
 
                                 <td className="center">
