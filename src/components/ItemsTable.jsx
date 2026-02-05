@@ -22,7 +22,7 @@ export default function ItemsTable({ items, setItems }) {
     const actualizarItem = (id, campo, valor) => { 
         const nuevosItems = items.map(item => { 
             if (item.id === id) { 
-                // CORRECCIÓN: Guardamos el valor tal cual (sin forzar Number inmediatamente)
+                // Guardamos el valor tal cual (sin forzar Number inmediatamente)
                 return { ...item, [campo]: valor};
             }
             return item;
@@ -67,7 +67,6 @@ export default function ItemsTable({ items, setItems }) {
                                         className="input-cell number"
                                         value={item.cantidad}
                                         step="any"  /* Permite decimales en el navegador */
-                                        // CORRECCIÓN: Pasamos e.target.value directo
                                         onChange={(e) => actualizarItem(item.id, 'cantidad', e.target.value)}
                                     />
                                 </td>
@@ -77,7 +76,6 @@ export default function ItemsTable({ items, setItems }) {
                                         type="number"
                                         className="input-cell money"
                                         value={item.precio}
-                                        // CORRECCIÓN: Pasamos e.target.value directo
                                         onChange={(e) => actualizarItem(item.id, 'precio', e.target.value)}
                                     />
                                 </td>

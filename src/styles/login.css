@@ -17,7 +17,7 @@
     width: 100%;
     max-width: 400px;
     text-align: center;
-    border-top: 5px solid #ea580c; /* Borde Superior Naranja FPC */
+    border-top: 5px solid #ea580c; /* Borde Superior Naranja */
 }
 
 /* Logo o Título Principal */
@@ -45,7 +45,6 @@
     gap: 20px;
 }
 
-/* Grupo de cada input (Label + Input) */
 .input-group {
     text-align: left;
 }

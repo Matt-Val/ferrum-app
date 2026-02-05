@@ -28,7 +28,6 @@ export default function QuotationList({ irAFormulario, onLogout }) {
 
     return ( 
         <div className="quotations-list fade-in">
-            {/* TÍTULO FERRUM */}
             <div style={{ marginBottom: '20px', borderBottom: '2px solid #ea580c', paddingBottom: '10px' }}>
                 <h1 style={{ color: '#1e293b', fontSize: '1.5rem', margin: 0 }}>FERRUM - Gestión de Cotizaciones</h1>
             </div>

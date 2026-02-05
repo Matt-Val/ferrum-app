@@ -94,9 +94,9 @@ export default function QuotationForm({ alVolver }) {
 
             <ItemsTable items={items} setItems={setItems}/>
 
-            {/* --- AQUÍ ESTÁ EL CAMBIO DE LA CUADRÍCULA --- */}
             <div className="totals-section">
                 <div className="totals-grid">
+                    
                     {/* Fila Neto */}
                     <div className="total-label">Neto</div>
                     <div className="total-value">{formatoDinero(neto)}</div>

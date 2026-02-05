@@ -52,13 +52,12 @@
 }
 
 /*--- (Formulario y Tabla de Items) --- */
-/*--- (Formulario y Tabla de Items) --- */
 .items-table-container { 
     margin-bottom: 20px; 
     border: 1px solid #fed7aa; 
     border-radius: 8px; 
     background: #fff; /* Fondo blanco */
-    padding: 20px;    /* <--- AQUÍ ESTÁ LA SOLUCIÓN DEL CENTRADO */
+    padding: 20px;
     overflow-x: auto; /* Para que no se rompa en móviles */
 }
 
