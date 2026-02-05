@@ -1,21 +1,22 @@
-# Ferrum - Sistema de Cotizaciones
+# Ferrum - Sistema de Gestión de Cotizaciones
 
-**Ferrum** es una aplicación web diseñada para centralizar y profesionalizar el proceso de emisión de cotizaciones.
+**Ferrum** es una aplicación web diseñada para la emisión rápida, profesional y centralizada de cotizaciones.
 
-Este proyecto soluciona el problema de la descentralización de datos (archivos dispersos) mediante una base de datos en la nube que garantiza folios únicos, respaldo automático y acceso simultáneo.
+Esta versión ha sido optimizada para funcionar de manera 100% local (offline), eliminando la dependencia de servidores externos o conexión a internet para gestionar tus datos. Todo queda guardado en el navegador.
 
 ## Características Principales
 
-* **Folio Automático:** Gestión centralizada de numeración correlativa (evita duplicidad de cotizaciones).
-* **Base de Datos en la Nube:** Persistencia de datos en tiempo real usando Supabase (PostgreSQL).
-* **Generación de Documentos:** Vista de impresión optimizada para generar PDFs profesionales con el formato corporativo.
-* **Búsqueda Rápida:** Filtrado por RUT o Nombre de cliente/empresa.
+* **Folio Automático:** El sistema detecta la última cotización y genera el siguiente número correlativo automáticamente.
+* **Generación de PDF:** Crea documentos PDF con la marca *FERRUM*, listos para imprimir o descargar, con un diseño limpio y corporativo.
+* **Cálculos Automáticos:** El sistema calcula netos, IVA (19?%) y totales al instante, permitiendo el uso de decimales.
+* **Búsqueda Rápida:** Encuentra cotizaciones antiguas filtrando por nombre de cliente o RUT.
 
 ## Stack Tecnológico
 
 * **Frontend:** React + Vite
+* **Persistencia:** LocalStorage
 * **Estilos:** CSS (Diseño responsivo y específico para impresión)
-* **Backend:** Supabase (PostgreSQL + API)
+* **Generación PDF:** jsPDF + jspdf-autotable
 * **Iconos:** Lucide React
 
 ## Instalaciones de Dependencias
@@ -23,7 +24,6 @@ Este proyecto soluciona el problema de la descentralización de datos (archivos 
 1. **Instalar dependencias**
     ```bash
     npm install
-    npm install @supabase/supabase-js
     npm install lucide-react
     npm install jspdf jspdf-autotable
     ```
